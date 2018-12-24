@@ -51,9 +51,14 @@ function translate(text, target) {
 
 function displayResults(rep) {
     $(".results").empty()
-    console.log(rep[0][0][0]);
+    $(".video").empty()
+    let t = $("#target").text()
+    console.log(t)
     let word = rep[0][0][0]
     $(".results").append(`<h2>${word}</h2>`)
+    $(".video").append(`<iframe id="ytplayer" type="text/html" width="640" height="360"
+    src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${word}%20"
+    frameborder="0"></iframe>`)
 }
 
 function listLangs() {
