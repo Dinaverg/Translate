@@ -10,7 +10,7 @@ function formatQueryParams(params) {
   }
 
 function watchForm() {
-    listLangs()
+    //listLangs()
     $('form').submit(event => {
         event.preventDefault();
         const text = $("#translateThis").val()
@@ -57,7 +57,7 @@ function displayResults(rep) {
     let word = rep[0][0][0]
     $(".results").append(`<h2>${word}</h2>`)
     $(".video").append(`<iframe id="ytplayer" type="text/html" width="640" height="360"
-    src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${word}%20"
+    src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${encodeURIComponent(word)}%20"
     frameborder="0"></iframe>`)
 }
 
