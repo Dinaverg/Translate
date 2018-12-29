@@ -52,14 +52,49 @@ function translate(text, target) {
 function displayResults(rep) {
     $(".results").empty()
     $(".video").empty()
-    let t = $("#target").text()
-    console.log(t)
+    $("#wikiInfo").empty()
     let word = rep[0][0][0]
     $(".results").append(`<h2>${word}</h2>`)
     $(".video").append(`<iframe id="ytplayer" type="text/html" width="640" height="360"
     src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${encodeURIComponent(word)}%20"
     frameborder="0"></iframe>`)
+    definition(word)
+    //$(".definition").append(``)
 }
+
+
+function showPage(page,text) {
+    let t = $("#target").val()
+    var baseURL = `http://${t}.wiktionary.org`;    
+    var sourceurl = baseURL + '/wiki/' + encodeURIComponent(page);
+  $('#pagetitle').text(page);
+  $('#wikiInfo').html(text);
+  console.log($('#wikiInfo').html(text))
+  $('#sourceurl').attr('href',sourceurl);
+  $('#licenseinfo').show();
+  // now you can modify content of #wikiInfo as you like
+  $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
+    function() { return baseURL + $(this).attr('href');
+  });
+}
+
+function definition(page) {
+    $('#pagetitle').hide();
+    $('#word').change(function() {
+        $('#wikiInfo').html('...please wait...');
+        $.getJSON(baseURL+'/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page='+ encodeURIComponent(page),
+            function(json) {
+                if(json.parse.revid > 0) {
+                    showPage(page,json.parse.text['*']);
+                } else {
+                    $('#wikiInfo').html('word not found');
+                    $('#licenseinfo').hide();
+                }
+        });
+    });
+};
+
+`http://${t}.wiktionary.org/wiki/${encodeURIComponent(word)}`
 
 function listLangs() {
     let drop = ''
