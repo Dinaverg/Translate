@@ -5,9 +5,11 @@ let apiKey = "AIzaSyC6dqpJDXX_teG-8LF5k_v8lAqgD9ICxuk"
 
 function formatQueryParams(params) {
     const queryItems = Object.keys(params)
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+        console.log('yo')
     return queryItems.join('&');
-  }
+}
+    
 
 function watchForm() {
     //listLangs()
@@ -17,6 +19,7 @@ function watchForm() {
         const target = $("#target").val()
         translate(text, target)
     })
+    console.log(target)
 }
 
 function translate(text, target) {
@@ -47,6 +50,7 @@ function translate(text, target) {
     .catch(err => {
         $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
+    console.log(text)
 }
 
 function displayResults(rep) {
@@ -59,6 +63,7 @@ function displayResults(rep) {
     src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${encodeURIComponent(word)}%20"
     frameborder="0"></iframe>`)
     definition(word)
+    console.log(word)
     //$(".definition").append(``)
 }
 
@@ -76,6 +81,7 @@ function showPage(page,text) {
   $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
     function() { return baseURL + $(this).attr('href');
   });
+  console.log(t)
 }
 
 function definition(page) {
@@ -92,6 +98,7 @@ function definition(page) {
                 }
         });
     });
+    console.log(baseURL)
 };
 
 `http://${t}.wiktionary.org/wiki/${encodeURIComponent(word)}`
