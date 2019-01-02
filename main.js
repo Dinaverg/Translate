@@ -67,24 +67,45 @@ function displayResults(rep) {
     //$(".definition").append(``)
 }
 
-
-function showPage(page,text) {
+function definition(page) {
     let t = $("#target").val()
-    var baseURL = `http://${t}.wiktionary.org`;    
-    var sourceurl = baseURL + '/wiki/' + encodeURIComponent(page);
-  $('#pagetitle').text(page);
-  $('#wikiInfo').html(text);
-  console.log($('#wikiInfo').html(text))
+    let baseURL = `https://${t}.wiktionary.org`
+    $.getJSON(baseURL+'/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page='+ encodeURIComponent(page),
+        function(json) {
+            showPage(page, json.parse.text['*'])
+    //let url = baseURL+'/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page='+ encodeURIComponent(page)
+    /* fetch(url)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.statusText)
+    })
+    .then(responseJson => showPage(responseJson))
+    .catch(err => {
+        $('#js-error-message').text(`Something went wrong: ${err.message}`)
+    }) */
+    //console.log(responseJson)
+    
+            //console.log(json)
+        })
+}
+function showPage(page,text) {
+    $('#pagetitle').text(page);
+    $('#wikiInfo').html(text);
+    console.log(text) 
+    //var sourceurl = baseURL + '/wiki/' + encodeURIComponent(page); 
+  /* console.log($('#wikiInfo').html(text))
   $('#sourceurl').attr('href',sourceurl);
   $('#licenseinfo').show();
   // now you can modify content of #wikiInfo as you like
   $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
     function() { return baseURL + $(this).attr('href');
   });
-  console.log(t)
+  console.log(t) */
 }
 
-function definition(page) {
+/* function definition(page) {
     $('#pagetitle').hide();
     $('#word').change(function() {
         $('#wikiInfo').html('...please wait...');
@@ -101,7 +122,7 @@ function definition(page) {
     console.log(baseURL)
 };
 
-`http://${t}.wiktionary.org/wiki/${encodeURIComponent(word)}`
+`http://${t}.wiktionary.org/wiki/${encodeURIComponent(word)}` */
 
 function listLangs() {
     let drop = ''
