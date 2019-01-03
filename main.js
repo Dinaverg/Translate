@@ -1,15 +1,6 @@
 'use strict'
 
 let searchURL = "https://translate.googleapis.com/translate_a/single"
-let apiKey = "AIzaSyC6dqpJDXX_teG-8LF5k_v8lAqgD9ICxuk"
-
-function formatQueryParams(params) {
-    const queryItems = Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-        console.log('yo')
-    return queryItems.join('&');
-}
-    
 
 function watchForm() {
     //listLangs()
@@ -19,7 +10,6 @@ function watchForm() {
         const target = $("#target").val()
         translate(text, target)
     })
-    console.log(target)
 }
 
 function translate(text, target) {
@@ -50,7 +40,12 @@ function translate(text, target) {
     .catch(err => {
         $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
-    console.log(text)
+}
+
+function formatQueryParams(params) {
+    const queryItems = Object.keys(params)
+        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+    return queryItems.join('&');
 }
 
 function displayResults(rep) {
@@ -63,75 +58,43 @@ function displayResults(rep) {
     src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${encodeURIComponent(word)}%20"
     frameborder="0"></iframe>`)
     definition(word)
-    console.log(word)
-    //$(".definition").append(``)
 }
-
+//wiktionary
 function definition(page) {
     let t = $("#target").val()
-    let baseURL = `https://${t}.wiktionary.org`
-    $.getJSON(baseURL+'/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page='+ encodeURIComponent(page),
+    $('#wikiInfo').html('...please wait...');
+    $.getJSON(`https://${t}.wiktionary.org/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page=`+ encodeURIComponent(page),
         function(json) {
             showPage(page, json.parse.text['*'])
-    //let url = baseURL+'/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page='+ encodeURIComponent(page)
-    /* fetch(url)
-    .then(response => {
-        if (response.ok) {
-            return response.json();
         }
-        throw new Error(response.statusText)
-    })
-    .then(responseJson => showPage(responseJson))
-    .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`)
-    }) */
-    //console.log(responseJson)
-    
-            //console.log(json)
-        })
+    )
 }
+
 function showPage(page,text) {
+    let t = $("#target").val()
+    let baseURL = `https://${t}.wiktionary.org`
     $('#pagetitle').text(page);
     $('#wikiInfo').html(text);
-    console.log(text) 
-    //var sourceurl = baseURL + '/wiki/' + encodeURIComponent(page); 
-  /* console.log($('#wikiInfo').html(text))
-  $('#sourceurl').attr('href',sourceurl);
-  $('#licenseinfo').show();
-  // now you can modify content of #wikiInfo as you like
-  $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
-    function() { return baseURL + $(this).attr('href');
-  });
-  console.log(t) */
-}
-
-/* function definition(page) {
-    $('#pagetitle').hide();
-    $('#word').change(function() {
-        $('#wikiInfo').html('...please wait...');
-        $.getJSON(baseURL+'/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page='+ encodeURIComponent(page),
-            function(json) {
-                if(json.parse.revid > 0) {
-                    showPage(page,json.parse.text['*']);
-                } else {
-                    $('#wikiInfo').html('word not found');
-                    $('#licenseinfo').hide();
-                }
-        });
-    });
-    console.log(baseURL)
-};
-
-`http://${t}.wiktionary.org/wiki/${encodeURIComponent(word)}` */
-
-function listLangs() {
-    let drop = ''
-
-    $.each(langs, (name, value) => drop += `<option value='${value}'>${name}</option>`)
-    $("select").append(drop)
+    $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
+    function() {
+        return baseURL + $(this).attr('href');
+    })
+    $('.definition').css('display', 'block')
+    $('.mw-parser-output').children().not("p, h2, h3, ul, ol, table, dl").css("display", "none")
+    $('.mw-parser-output hr').nextAll().css("display", "none")
+    $('.mw-parser-output h2:nth-of-type(2)').nextAll().css("display", "none")
+    $('.mw-parser-output h2:nth-of-type(2)').css("display", "none")
 }
 
 $(watchForm)
+
+
+//no longer in use
+/* function listLangs() {
+    let drop = ''
+    $.each(langs, (name, value) => drop += `<option value='${value}'>${name}</option>`)
+    $("select").append(drop)
+}
 
 let langs = {
 Afrikaans:	'af',
@@ -239,3 +202,4 @@ Yiddish:	'yi',
 Yoruba	:'yo',
 Zulu	:'zu'
 }
+ */

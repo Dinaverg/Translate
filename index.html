@@ -11,15 +11,16 @@
 	<script src="jquery-ui.min.js"></script>
 	<script src="jquery.select-to-autocomplete.js"></script>
 	<script>
-	  (function($){
-	    $(function(){
-	      $('select').selectToAutocomplete();
-	      $('form').submit(function(){
-	        console.log( $(this).serialize() );
-	        return false;
-	      });
-	    });
-	  })(jQuery);
+	    (function($){
+	        $(function(){
+	            $('select').selectToAutocomplete();
+	            $('form').submit(function(){
+	                console.log( $(this).serialize() );
+	                return false;
+	            });
+	        });
+        })
+        (jQuery);
 	</script>
 	<link rel="stylesheet" href="jquery-ui.css">
     <script src="main.js"></script>
@@ -44,14 +45,9 @@
         <section class="video">
 
         </section>
-
         <section class="definition">
             <h1 id='pagetitle'></h1>
             <div id="wikiInfo"></div>
-            <div id="licenseinfo" style="font-size:small; display:none;">
-                Modified original content <a id='sourceurl'>from Wiktionary</a>.
-                Text available under <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution/Share-Alike License</a>.
-            </div>
         </section>
     </main>
     <footer>
