@@ -2,19 +2,61 @@
     font: bold
 }
 
-button {
-    width: 80px;
-    height: 19px;
+body, html {
+    height: 100%;
 }
 
 body {
     font-family: Arial, Verdana, sans-serif;
     font-size: 13px;
+    background-image: url("background-blur-book-268438.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+.container {
+    min-height: 100%;
+    position: relative;
+    background-color: rgba(169, 169, 255, .8)
+}
+
+button {
+    width: 80px;
+    height: 19px;
+}
+
+form {
+    text-align: center;
+}
+
+label {
+    font-family: 'Roboto Slab', serif;
+    font-size: 2vw;
+}
+
+.results {
+    text-align: center;
+}
+
+.video {
+    display: inline;
+
 }
 
 .definition {
     border: 3px groove grey;
     display: none;
+    min-width: 640px;
+    background-color: #fff
+}
+
+h2, h3 {
+    font-family: 'Roboto Slab', serif;
+}
+
+p {
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .ui-autocomplete {
