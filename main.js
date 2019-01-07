@@ -68,23 +68,28 @@ function definition(page) {
             showPage(page, json.parse.text['*'])
         }
     )
+    console.log("yo")
 }
 
 function showPage(page,text) {
     let t = $("#target").val()
     let baseURL = `https://${t}.wiktionary.org`
+    $('.definition').css('display', 'block')
     $('#pagetitle').text(page);
+    
     $('#wikiInfo').html(text);
     $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
     function() {
         return baseURL + $(this).attr('href');
     })
-    $('.definition').css('display', 'block')
+    
     $('.mw-parser-output').children().not("p, h2, h3, ul, ol, table, dl").css("display", "none")
     $('.mw-parser-output hr').nextAll().css("display", "none")
     $('.mw-parser-output h2:nth-of-type(2)').nextAll().css("display", "none")
     $('.mw-parser-output h2:nth-of-type(2)').css("display", "none")
+    //$('.definition').css("overflow-y", "auto")
 }
+
 
 $(watchForm)
 

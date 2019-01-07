@@ -7,12 +7,9 @@ body, html {
 }
 
 body {
-    font-family: Arial, Verdana, sans-serif;
-    font-size: 13px;
     background-image: url("background-blur-book-268438.jpg");
     background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
+    background-repeat: repeat
 }
 
 .container {
@@ -28,11 +25,19 @@ button {
 
 form {
     text-align: center;
+    padding-top: 30px;
 }
 
 label {
     font-family: 'Roboto Slab', serif;
     font-size: 2vw;
+}
+
+input[type=text] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    border-bottom: 2px solid rgb(255, 243, 143);
 }
 
 .results {
@@ -48,15 +53,30 @@ label {
     border: 3px groove grey;
     display: none;
     min-width: 640px;
-    background-color: #fff
+    background-color: rgb(255, 243, 143);
+}
+
+#wikiInfo {
+    text-overflow: ellipsis;
+}
+
+.mw-parser-output {
+    text-overflow: ellipsis;
 }
 
 h2, h3 {
     font-family: 'Roboto Slab', serif;
 }
 
-p {
+p, table, dl {
     font-family: 'Roboto Condensed', sans-serif;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    text-align: center;
 }
 
 .ui-autocomplete {
