@@ -53,7 +53,7 @@ function displayResults(rep) {
     $(".video").empty()
     $("#wikiInfo").empty()
     let word = rep[0][0][0]
-    $(".results").append(`<h2>${word}</h2>`)
+    $(".results").append(`<h1>${word}</h1>`)
     $(".video").append(`<iframe id="ytplayer" type="text/html" width="640" height="360"
     src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${encodeURIComponent(word)}%20"
     frameborder="0"></iframe>`)
@@ -65,24 +65,31 @@ function definition(page) {
     $('#wikiInfo').html('...please wait...');
     $.getJSON(`https://${t}.wiktionary.org/w/api.php?action=parse&format=json&prop=text|revid|displaytitle&callback=?&page=`+ encodeURIComponent(page),
         function(json) {
-            showPage(page, json.parse.text['*'])
+            showPage(json.parse.text['*'])
         }
     )
-    console.log("yo")
 }
 
-function showPage(page,text) {
+function showPage(text) {
     let t = $("#target").val()
     let baseURL = `https://${t}.wiktionary.org`
     $('.definition').css('display', 'block')
-    $('#pagetitle').text(page);
-    
     $('#wikiInfo').html(text);
     $('#wikiInfo').find('a:not(.references a):not(.extiw):not([href^="#"])').attr('href',
     function() {
         return baseURL + $(this).attr('href');
     })
     
+/*     $(".collapsible").click(function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+    }); */
+
     $('.mw-parser-output').children().not("p, h2, h3, ul, ol, table, dl").css("display", "none")
     $('.mw-parser-output hr').nextAll().css("display", "none")
     $('.mw-parser-output h2:nth-of-type(2)').nextAll().css("display", "none")

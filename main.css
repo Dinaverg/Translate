@@ -1,11 +1,3 @@
-* {
-    font: bold
-}
-
-body, html {
-    height: 100%;
-}
-
 body {
     background-image: url("background-blur-book-268438.jpg");
     background-position: center;
@@ -13,9 +5,9 @@ body {
 }
 
 .container {
-    min-height: 100%;
-    position: relative;
-    background-color: rgba(169, 169, 255, .8)
+    height: 98vh;
+    background-color: rgba(169, 169, 255, .8);
+    overflow: auto;
 }
 
 button {
@@ -30,7 +22,7 @@ form {
 
 label {
     font-family: 'Roboto Slab', serif;
-    font-size: 2vw;
+    font-size: 4vw;
 }
 
 input[type=text] {
@@ -38,15 +30,35 @@ input[type=text] {
     margin: 8px 0;
     border: none;
     border-bottom: 2px solid rgb(255, 243, 143);
+    font-size: 20px;
+}
+
+input[type=submit] {
+    background-color: #c3c2ff;
+    border-radius: 15px;
+    height: 49px;
+    width: 200px;
+    font-size: 22px;
+}
+
+input[type=submit]:hover {
+    background-color: #534FB2;
+    color: #FFF;
+    transition: background-color .2s ease-out;
+    transition: color .1s ease-out;
 }
 
 .results {
     text-align: center;
 }
 
+.results > h1 {
+    font-size: 4vw;
+    margin-top: 30px;
+}
+
 .video {
     display: inline;
-
 }
 
 .definition {
@@ -54,14 +66,7 @@ input[type=text] {
     display: none;
     min-width: 640px;
     background-color: rgb(255, 243, 143);
-}
-
-#wikiInfo {
-    text-overflow: ellipsis;
-}
-
-.mw-parser-output {
-    text-overflow: ellipsis;
+    margin-bottom: 100px;
 }
 
 h2, h3 {
@@ -74,7 +79,7 @@ p, table, dl {
 
 footer {
     position: absolute;
-    bottom: 0;
+    bottom: 5%;
     display: block;
     text-align: center;
 }
@@ -106,3 +111,28 @@ footer {
   color: #161A1C;
 }
 
+/* .collapsible {
+    background-color: #B2A153;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #ccc;
+    transition: background-color .2s ease-out;
+  }
+  
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #FFEC92;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+  } */
