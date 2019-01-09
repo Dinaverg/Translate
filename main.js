@@ -3,7 +3,6 @@
 let searchURL = "https://translate.googleapis.com/translate_a/single"
 
 function watchForm() {
-    //listLangs()
     $('form').submit(event => {
         event.preventDefault();
         const text = $("#translateThis").val()
@@ -22,14 +21,7 @@ function translate(text, target) {
     };
     const queryString = formatQueryParams(params)
     const url = searchURL + '?' + queryString;
-
-    fetch(url, {
-        method: 'POST',
-        body: {
-            q: text
-        },
-        headers: new Headers()
-    })
+    fetch(url)
     .then(response => {
         if (response.ok) {
             return response.json();
@@ -53,11 +45,11 @@ function displayResults(rep) {
     $(".video").empty()
     $("#wikiInfo").empty()
     let word = rep[0][0][0]
-    $(".results").append(`<h1>${word}</h1>`)
-    $(".video").append(`<iframe id="ytplayer" type="text/html" width="640" height="360"
+    $(".results").append(`<h1>${word.toLowerCase()}</h1>`)
+    $(".video").append(`<div class="videoWrapper"><iframe id="ytplayer" type="text/html" width="640" height="360"
     src="https://www.youtube.com/embed?listType=search&list=pronunciation%20of%20${encodeURIComponent(word)}%20"
-    frameborder="0"></iframe>`)
-    definition(word)
+    frameborder="0"></iframe></div>`)
+    definition(word.toLowerCase())
 }
 //wiktionary
 function definition(page) {
@@ -72,6 +64,7 @@ function definition(page) {
 
 function showPage(text) {
     let t = $("#target").val()
+    //wiktionary uses the same ISO standard to indicate the language of the wiktionary
     let baseURL = `https://${t}.wiktionary.org`
     $('.definition').css('display', 'block')
     $('#wikiInfo').html(text);
@@ -79,139 +72,18 @@ function showPage(text) {
     function() {
         return baseURL + $(this).attr('href');
     })
-    
-/*     $(".collapsible").click(function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-          content.style.display = "none";
-        } else {
-          content.style.display = "block";
-        }
-    }); */
-
+    //some languages wiktionaries have broken images
+    $("img").error(function() {
+        $(this).hide();
+    })
+    .attr("src", "noimage.png");
+    //removing undesired parser content
     $('.mw-parser-output').children().not("p, h2, h3, ul, ol, table, dl").css("display", "none")
-    $('.mw-parser-output hr').nextAll().css("display", "none")
+    //removing other languages after the first
+    $('.mw-parser-output hr').nextAll().css("display", "none") 
     $('.mw-parser-output h2:nth-of-type(2)').nextAll().css("display", "none")
     $('.mw-parser-output h2:nth-of-type(2)').css("display", "none")
-    //$('.definition').css("overflow-y", "auto")
 }
 
 
 $(watchForm)
-
-
-//no longer in use
-/* function listLangs() {
-    let drop = ''
-    $.each(langs, (name, value) => drop += `<option value='${value}'>${name}</option>`)
-    $("select").append(drop)
-}
-
-let langs = {
-Afrikaans:	'af',
-Albanian:	'sq',
-Amharic:	'am',
-Arabic	:'ar',
-Armenian:	'hy',
-Azerbaijani:	'az',
-Basque	:'eu',
-Belarusian:	'be',
-Bengali	:'bn',
-Bosnian:	'bs',
-Bulgarian:	'bg',
-Catalan	:'ca',
-Cebuano	:'ceb',
-'Chinese (Simplified)':	'zh-CN',
-'Chinese (Traditional)': 'zh-TW',
-Corsican: 'co',
-Croatian: 'hr',
-Czech:	'cs',
-Danish:	'da',
-Dutch: 'nl',
-English: 'en',
-Esperanto: 'eo',
-Estonian: 'et',
-Finnish: 'fi',
-French: 'fr',
-Frisian	:'fy',
-Galician:	'gl',
-Georgian:	'ka',
-German:	'de',
-Greek: 'el',
-Gujarati:	'gu',
-'Haitian Creole': 'ht',
-Hausa	:'ha',
-Hawaiian:	'haw',
-Hebrew:	'he',
-Hindi	:'hi',
-Hmong	:'hmn', 
-Hungarian:	'hu',
-Icelandic:	'is',
-Igbo:	'ig',
-Indonesian:	'id',
-Irish:	'ga',
-Italian:	'it',
-Japanese:	'ja',
-Javanese:	'jw',
-Kannada:	'kn',
-Kazakh:	'kk',
-Khmer	:'km',
-Korean:	'ko',
-Kurdish:	'ku',
-Kyrgyz	:'ky',
-Lao	:'lo',
-Latin:	'la',
-Latvian:	'lv',
-Lithuanian:	'lt',
-Luxembourgish:	'lb',
-Macedonian:	'mk',
-Malagasy	:'mg',
-Malay	:'ms',
-Malayalam:	'ml',
-Maltese:	'mt',
-Maori	:'mi',
-Marathi	:'mr',
-Mongolian	:'mn',
-Myanmar:	'my',
-Nepali:	'ne',
-Norwegian:	'no',
-Nyanja:	'ny',
-Pashto	:'ps',
-Persian:	'fa',
-Polish:	'pl',
-Portuguese :	'pt',
-Punjabi	:'pa',
-Romanian:	'ro',
-Russian	:'ru',
-Samoan:	'sm',
-'Scots Gaelic':	'gd',
-Serbian	:'sr',
-Sesotho:	'st',
-Shona	:'sn',
-Sindhi:	'sd',
-Sinhala: 'si',
-Slovak:	'sk',
-Slovenian:	'sl',
-Somali	:'so',
-Spanish	:'es',
-Sundanese:	'su',
-Swahili	:'sw',
-Swedish	:'sv',
-Tagalog:	'tl',
-Tajik:	'tg',
-Tamil:	'ta',
-Telugu	:'te',
-Thai	:'th',
-Turkish	:'tr',
-Ukrainian:	'uk',
-Urdu:	'ur',
-Uzbek	:'uz',
-Vietnamese:	'vi',
-Welsh	:'cy',
-Xhosa	:'xh',
-Yiddish:	'yi',
-Yoruba	:'yo',
-Zulu	:'zu'
-}
- */
